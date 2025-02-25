@@ -18,12 +18,11 @@ def main():
         mlflow.end_run()
 
     # Set up MLflow tracking
-    mlflow.set_tracking_uri("http://127.0.0.1:5000")  
+    mlflow.set_tracking_uri("http://127.0.0.1:5000")
     mlflow.set_experiment("Customer_Churn_Experiment")
 
     # Set up logging
     logging.basicConfig(filename='main.log', level=logging.DEBUG)
-    logger = logging.getLogger(__name__)
     
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Customer Churn Prediction Pipeline")
@@ -73,10 +72,10 @@ def main():
             # Log model and parameters to MLflow
             mlflow.log_param("model_type", "Gradient Boosting")
             mlflow.log_param("data_version", "v1")
-            
+
             # Log model
             mlflow.sklearn.log_model(gbm, "model")
-            
+
             print("Model training complete.")
 
     # Step 3: Evaluate model if needed
@@ -94,7 +93,7 @@ def main():
         print("Evaluation Metrics:", metrics)  # Debugging
 
         # Log evaluation metrics
-        with mlflow.start_run() as run:
+        with mlflow.start_run():
             mlflow.log_metric("accuracy", metrics.get("accuracy", 0))
             mlflow.log_metric("precision", metrics.get("precision", 0))
             mlflow.log_metric("recall", metrics.get("recall", 0))
@@ -121,7 +120,7 @@ def main():
             print("Error: No saved model found. Train and save a model first.")
             return
         print("Model loaded successfully.")
-    
+
     # Step 6: Make predictions if needed
     if args.predict:
         print("Making predictions...")
@@ -130,12 +129,12 @@ def main():
         except FileNotFoundError:
             print("Error: No model found. Run --train first.")
             return
-        
+
         sample_data = np.array([[100, 1, 25, 150, 45.5, 130, 35.7, 120, 30.2, 30, 10.5, 2, 1, 30.0]])
         prediction = gbm.predict(sample_data)
         probability = gbm.predict_proba(sample_data)[0][1]
         print(f"Prediction: {prediction[0]}, Churn Probability: {probability:.4f}")
-        
+
 
 if __name__ == "__main__":
     main()
