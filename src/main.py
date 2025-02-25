@@ -23,7 +23,7 @@ def main():
 
     # Set up logging
     logging.basicConfig(filename='main.log', level=logging.DEBUG)
-    
+
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Customer Churn Prediction Pipeline")
     parser.add_argument("--prepare", action="store_true", help="Prepare the data")
@@ -65,7 +65,7 @@ def main():
             return
 
         # Start MLflow run for training
-        with mlflow.start_run() as run:
+        with mlflow.start_run():
             gbm = train_model(X_train_scaled_smote_df, y_train_smote_df)
             joblib.dump(gbm, DATA_PATHS["model"])
 
