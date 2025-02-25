@@ -7,3 +7,9 @@ flask
 joblib
 elasticsearch
 kibana
+flake8
+bandit
+black
+mypy
+pytest
+pylint
