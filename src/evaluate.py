@@ -9,7 +9,7 @@ def evaluate_model(model, X_test, y_test):
     metrics = {
         "accuracy": accuracy_score(y_test, y_pred),
         "classification_report": classification_report(y_test, y_pred),
-        "confusion_matrix": confusion_matrix(y_test, y_pred)
+        "confusion_matrix": confusion_matrix(y_test, y_pred),
     }
 
     return metrics

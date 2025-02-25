@@ -9,12 +9,12 @@ def train_model(X_train_scaled_smote, y_train_smote):
         "max_depth": 10,
         "max_features": None,
         "max_leaf_nodes": 7,
-        "min_samples_leaf": 5
+        "min_samples_leaf": 5,
     }
 
     gbm = GradientBoostingClassifier(**best_params)
     gbm.fit(X_train_scaled_smote, y_train_smote)
 
     # Save the model
-    joblib.dump(gbm, DATA_PATHS['model'])
+    joblib.dump(gbm, DATA_PATHS["model"])
     return gbm

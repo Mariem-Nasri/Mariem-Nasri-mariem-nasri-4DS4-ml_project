@@ -9,9 +9,9 @@ os.makedirs(MODEL_DIR, exist_ok=True)
 
 # Define paths for saving data
 DATA_PATHS = {
-    'X_train': os.path.join(PROCESSED_DATA_DIR, "X_train.pkl"),
-    'X_test': os.path.join(PROCESSED_DATA_DIR, "X_test.pkl"),
-    'y_train': os.path.join(PROCESSED_DATA_DIR, "y_train.pkl"),
-    'y_test': os.path.join(PROCESSED_DATA_DIR, "y_test.pkl"),
-    'model': os.path.join(MODEL_DIR, "trained_model.pkl")
+    "X_train": os.path.join(PROCESSED_DATA_DIR, "X_train.pkl"),
+    "X_test": os.path.join(PROCESSED_DATA_DIR, "X_test.pkl"),
+    "y_train": os.path.join(PROCESSED_DATA_DIR, "y_train.pkl"),
+    "y_test": os.path.join(PROCESSED_DATA_DIR, "y_test.pkl"),
+    "model": os.path.join(MODEL_DIR, "trained_model.pkl"),
 }
