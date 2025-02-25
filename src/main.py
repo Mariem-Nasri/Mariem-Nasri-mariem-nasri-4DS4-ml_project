@@ -2,8 +2,6 @@ import mlflow
 import mlflow.sklearn
 import argparse
 import joblib
-import logging
-import numpy as np  
 from src.config import DATA_PATHS
 from src.prepare import prepare_data
 from src.train import train_model
@@ -11,7 +9,6 @@ from src.evaluate import evaluate_model
 from src.save import save_model
 from src.load import load_model
 from src.predict import make_prediction
-import logging
 
 # Define the logger globally
 logging.basicConfig(level=logging.DEBUG)
@@ -86,12 +83,9 @@ def main():
         # For example: mlflow.log_metric("accuracy", accuracy_score(y_test, gbm.predict(X_test)))
 
         print("Model training complete.")
-
-
     # Step 3: Evaluate model if needed
     if args.evaluate:
         print("\n🔍 Evaluating Model...\n" + "="*30)
-
         try:
             gbm = joblib.load(DATA_PATHS["model"])
             X_test_scaled_smote_df = joblib.load(DATA_PATHS["X_test"])
@@ -99,9 +93,7 @@ def main():
         except FileNotFoundError:
             print("❌ Error: Model or data files not found. Run --train or --prepare first.")
             return
-
         metrics = evaluate_model(gbm, X_test_scaled_smote_df, y_test_smote_df)
-
         # Structured output
         print("\n📊 **Evaluation Metrics:**")
         print(f"✅ Accuracy    : {metrics.get('accuracy', 0):.4f}")
@@ -142,15 +134,11 @@ def main():
     # Step 6: Make predictions if needed
     if args.predict:
         print("\n🤖 Making Predictions...\n" + "="*30)
-
         try:
             gbm = joblib.load(DATA_PATHS["model"])  # Load the trained model
         except FileNotFoundError:
             print("❌ Error: No model found. Run --train first.")
             return
-
         make_prediction(gbm, logger)
-
 if __name__ == "__main__":
     main()
-

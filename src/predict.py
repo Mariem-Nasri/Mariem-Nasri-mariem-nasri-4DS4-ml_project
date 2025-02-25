@@ -2,6 +2,7 @@ import joblib
 import numpy as np
 from src.config import DATA_PATHS
 
+
 def make_prediction(gbm, logger):
     try:
         # Load the scaler
@@ -54,4 +55,3 @@ def make_prediction(gbm, logger):
     logger.info(f"Prediction: {prediction[0]}, Probability: {probability}")
     print(f"Prediction: {prediction[0]}")
     print(f"Churn Probability: {probability:.4f}")
-

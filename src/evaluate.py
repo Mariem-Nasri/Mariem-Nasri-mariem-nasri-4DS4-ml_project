@@ -1,4 +1,7 @@
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score,
+precision_score, recall_score, f1_score,
+classification_report, confusion_matrix
+
 
 def evaluate_model(model, X_test, y_test):
     """Evaluate the model and return metrics."""
@@ -12,5 +15,4 @@ def evaluate_model(model, X_test, y_test):
         "classification_report": classification_report(y_test, y_pred),
         "confusion_matrix": confusion_matrix(y_test, y_pred),
     }
-
     return metrics

@@ -10,6 +10,7 @@ from sklearn.cluster import KMeans
 # Paths for saving data
 from src.config import DATA_PATHS  # Assuming paths are imported from main.py
 
+
 def prepare_data():
     df = pd.read_csv("data/data_churn.csv")
     df_dp = df.copy()
@@ -50,7 +51,6 @@ def prepare_data():
     df_dp = df_dp.merge(state_churn_rate[["State", "State_Category"]], on="State", how="left")
     df_dp["State_Category"] = df_dp["State_Category"].map({"Low": 0, "Medium": 1, "High": 2})
     df_dp.drop(columns=["State"], inplace=True)
-
     # Dropping insignificant columns
     df_dp.drop(columns=["Area code", "Voice mail plan"], inplace=True)
     df_dp.drop(
@@ -62,7 +62,6 @@ def prepare_data():
         ],
         inplace=True,
     )
-
     # Feature Engineering: Usage Score
     corr_features = [
         "Total day charge",
