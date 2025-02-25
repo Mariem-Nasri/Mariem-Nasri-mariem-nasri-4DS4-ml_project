@@ -12,7 +12,7 @@ from src.config import DATA_PATHS  # Assuming paths are imported from main.py
 
 
 def prepare_data():
-    df = pd.read_csv("~/mariem-nasri-4DS4-ml_project/data/data_churn.csv")
+    df = pd.read_csv("data/data_churn.csv")
     df_dp = df.copy()
 
     # Handling outliers
