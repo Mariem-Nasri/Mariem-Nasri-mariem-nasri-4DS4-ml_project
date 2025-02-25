@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/0de6fa0045274447a9f3be8b5a23133d/artifacts
+end_time: 1740521662447
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: 0de6fa0045274447a9f3be8b5a23133d
+run_name: grandiose-shrew-699
+run_uuid: 0de6fa0045274447a9f3be8b5a23133d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740521658373
+status: 3
+tags: []
+user_id: mariem

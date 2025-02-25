@@ -3,13 +3,19 @@ import mlflow.sklearn
 import argparse
 import joblib
 import logging
-import numpy as np  # Add missing import
+import numpy as np  
 from src.config import DATA_PATHS
 from src.prepare import prepare_data
 from src.train import train_model
 from src.evaluate import evaluate_model
 from src.save import save_model
 from src.load import load_model
+from src.predict import make_prediction
+import logging
+
+# Define the logger globally
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -57,49 +63,61 @@ def main():
     # Step 2: Train model if needed
     if args.train:
         print("Training model...")
-        try:
-            X_train_scaled_smote_df = joblib.load(DATA_PATHS["X_train"])
-            y_train_smote_df = joblib.load(DATA_PATHS["y_train"])
-        except FileNotFoundError:
-            print("Error: Data files not found. Run --prepare first.")
-            return
+    try:
+        X_train_scaled_smote_df = joblib.load(DATA_PATHS["X_train"])
+        y_train_smote_df = joblib.load(DATA_PATHS["y_train"])
+    except FileNotFoundError:
+        print("Error: Data files not found. Run --prepare first.")
+        return
 
-        # Start MLflow run for training
-        with mlflow.start_run():
-            gbm = train_model(X_train_scaled_smote_df, y_train_smote_df)
-            joblib.dump(gbm, DATA_PATHS["model"])
+    # Start MLflow run for training
+    with mlflow.start_run():
+        # Train the model using the pre-defined function
+        gbm = train_model(X_train_scaled_smote_df, y_train_smote_df)
 
-            # Log model and parameters to MLflow
-            mlflow.log_param("model_type", "Gradient Boosting")
-            mlflow.log_param("data_version", "v1")
+        # Log parameters for tracking purposes
+        mlflow.log_param("model_type", "Gradient Boosting")
+        mlflow.log_param("data_version", "v1")
 
-            # Log model
-            mlflow.sklearn.log_model(gbm, "model")
+        # Log the model using MLflow (no need for joblib.dump here)
+        mlflow.sklearn.log_model(gbm, "model")
 
-            print("Model training complete.")
+        # Optionally, log any additional metrics if needed
+        # For example: mlflow.log_metric("accuracy", accuracy_score(y_test, gbm.predict(X_test)))
+
+        print("Model training complete.")
+
 
     # Step 3: Evaluate model if needed
     if args.evaluate:
-        print("Evaluating model...")
+        print("\n🔍 Evaluating Model...\n" + "="*30)
+
         try:
             gbm = joblib.load(DATA_PATHS["model"])
             X_test_scaled_smote_df = joblib.load(DATA_PATHS["X_test"])
             y_test_smote_df = joblib.load(DATA_PATHS["y_test"])
         except FileNotFoundError:
-            print("Error: Model or data files not found. Run --train or --prepare first.")
+            print("❌ Error: Model or data files not found. Run --train or --prepare first.")
             return
 
         metrics = evaluate_model(gbm, X_test_scaled_smote_df, y_test_smote_df)
-        print("Evaluation Metrics:", metrics)  # Debugging
 
-        # Log evaluation metrics
+        # Structured output
+        print("\n📊 **Evaluation Metrics:**")
+        print(f"✅ Accuracy    : {metrics.get('accuracy', 0):.4f}")
+        print(f"🎯 Precision  : {metrics.get('precision', 0):.4f}")
+        print(f"📈 Recall     : {metrics.get('recall', 0):.4f}")
+        print(f"📉 F1 Score   : {metrics.get('f1_score', 0):.4f}")
+        print("="*30)
+
+        # Log evaluation metrics to MLflow
         with mlflow.start_run():
             mlflow.log_metric("accuracy", metrics.get("accuracy", 0))
             mlflow.log_metric("precision", metrics.get("precision", 0))
             mlflow.log_metric("recall", metrics.get("recall", 0))
+            mlflow.log_metric("f1_score", metrics.get("f1_score", 0))
 
-        print("Model evaluation complete.")
-        print("Metrics:", metrics)
+        print("\n✅ Model evaluation complete!\n")
 
     # Step 4: Save model if needed
     if args.save:
@@ -123,18 +141,16 @@ def main():
 
     # Step 6: Make predictions if needed
     if args.predict:
-        print("Making predictions...")
+        print("\n🤖 Making Predictions...\n" + "="*30)
+
         try:
-            gbm = joblib.load(DATA_PATHS["model"])
+            gbm = joblib.load(DATA_PATHS["model"])  # Load the trained model
         except FileNotFoundError:
-            print("Error: No model found. Run --train first.")
+            print("❌ Error: No model found. Run --train first.")
             return
 
-        sample_data = np.array([[100, 1, 25, 150, 45.5, 130, 35.7, 120, 30.2, 30, 10.5, 2, 1, 30.0]])
-        prediction = gbm.predict(sample_data)
-        probability = gbm.predict_proba(sample_data)[0][1]
-        print(f"Prediction: {prediction[0]}, Churn Probability: {probability:.4f}")
-
+        make_prediction(gbm, logger)
 
 if __name__ == "__main__":
     main()
+

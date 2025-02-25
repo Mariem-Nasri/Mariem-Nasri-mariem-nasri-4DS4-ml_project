@@ -10,7 +10,6 @@ from sklearn.cluster import KMeans
 # Paths for saving data
 from src.config import DATA_PATHS  # Assuming paths are imported from main.py
 
-
 def prepare_data():
     df = pd.read_csv("data/data_churn.csv")
     df_dp = df.copy()
@@ -26,9 +25,7 @@ def prepare_data():
 
     # Encoding categorical variables
     label_encoder = LabelEncoder()
-    df_dp["International plan"] = label_encoder.fit_transform(
-        df_dp["International plan"]
-    )
+    df_dp["International plan"] = label_encoder.fit_transform(df_dp["International plan"])
     df_dp["Voice mail plan"] = label_encoder.fit_transform(df_dp["Voice mail plan"])
     df_dp["Churn"] = label_encoder.fit_transform(df_dp["Churn"])
 
@@ -36,9 +33,7 @@ def prepare_data():
     state_churn_rate = df_dp.groupby("State")["Churn"].mean().reset_index()
     state_churn_rate.rename(columns={"Churn": "Churn_Rate"}, inplace=True)
     kmeans = KMeans(n_clusters=3, random_state=42)
-    state_churn_rate["Cluster"] = kmeans.fit_predict(
-        state_churn_rate[["Churn_Rate"]].values
-    )
+    state_churn_rate["Cluster"] = kmeans.fit_predict(state_churn_rate[["Churn_Rate"]].values)
 
     cluster_mapping = (
         state_churn_rate.groupby("Cluster")["Churn_Rate"]
@@ -52,12 +47,8 @@ def prepare_data():
         cluster_mapping[2]: "High",
     }
     state_churn_rate["State_Category"] = state_churn_rate["Cluster"].map(cluster_labels)
-    df_dp = df_dp.merge(
-        state_churn_rate[["State", "State_Category"]], on="State", how="left"
-    )
-    df_dp["State_Category"] = df_dp["State_Category"].map(
-        {"Low": 0, "Medium": 1, "High": 2}
-    )
+    df_dp = df_dp.merge(state_churn_rate[["State", "State_Category"]], on="State", how="left")
+    df_dp["State_Category"] = df_dp["State_Category"].map({"Low": 0, "Medium": 1, "High": 2})
     df_dp.drop(columns=["State"], inplace=True)
 
     # Dropping insignificant columns
@@ -86,9 +77,7 @@ def prepare_data():
     # Splitting data
     X = df_dp.drop(columns=["Churn"])
     y = df_dp["Churn"]
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     # Data scaling
     scaler = StandardScaler()
@@ -102,10 +91,11 @@ def prepare_data():
     smote = SMOTE(random_state=42)
     X_train_scaled_smote, y_train_smote = smote.fit_resample(X_train_scaled, y_train)
 
-    # Save data to disk
+    # Save data and scaler to disk
     joblib.dump(X_train_scaled_smote, DATA_PATHS["X_train"])
     joblib.dump(X_test_scaled, DATA_PATHS["X_test"])
     joblib.dump(y_train_smote, DATA_PATHS["y_train"])
     joblib.dump(y_test, DATA_PATHS["y_test"])
+    joblib.dump(scaler, DATA_PATHS["scaler"])
 
     return X_train_scaled_smote, X_test_scaled, y_train_smote, y_test

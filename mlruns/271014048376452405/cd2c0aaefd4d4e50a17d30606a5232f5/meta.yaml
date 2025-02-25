@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/cd2c0aaefd4d4e50a17d30606a5232f5/artifacts
+end_time: 1740516824768
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: cd2c0aaefd4d4e50a17d30606a5232f5
+run_name: abundant-grub-896
+run_uuid: cd2c0aaefd4d4e50a17d30606a5232f5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740516824742
+status: 3
+tags: []
+user_id: mariem

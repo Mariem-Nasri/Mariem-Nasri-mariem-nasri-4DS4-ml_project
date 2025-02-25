@@ -13,7 +13,7 @@ pipeline {
     }
 
     triggers {
-        githubPush()
+        pollSCM('H/5 * * * *')  // Poll SCM every 5 minutes
     }
 
     stages {
@@ -37,6 +37,8 @@ pipeline {
         stage('Start MLflow Server') {
             steps {
                 sh ". ${ENV_NAME}/bin/activate && nohup mlflow server --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000 > mlflow.log 2>&1 &"
+                sh "sleep 10"
+                sh "curl --retry 5 --retry-delay 10 --retry-connrefused http://127.0.0.1:5000"
             }
         }
 
@@ -48,6 +50,12 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                sh ". ${ENV_NAME}/bin/activate && pytest tests/ --cov=src --cov-report=xml"
+            }
+        }
+
         stage('Data Preparation') {
             steps {
                 sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --prepare"
@@ -56,13 +64,17 @@ pipeline {
 
         stage('Train Model with MLflow') {
             steps {
-                sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --train"
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --train"
+                }
             }
         }
 
         stage('Evaluate Model with MLflow') {
             steps {
-                sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --evaluate"
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --evaluate"
+                }
             }
         }
 
@@ -81,8 +93,17 @@ pipeline {
 
     post {
         always {
-            sh 'sleep 30'
+            sh 'pkill -f "mlflow server" || true'
             sh 'pkill -f "python3 deployment/app.py" || true'
+            sh 'sleep 10'
+            archiveArtifacts artifacts: '**/mlflow.log, **/flask.log, **/coverage.xml', allowEmptyArchive: true
+            junit '**/test-results.xml'
+        }
+        failure {
+            emailext body: 'Build failed. Please check: ${BUILD_URL}', subject: 'Build Failed: ${JOB_NAME}', to: 'your-email@example.com'
+        }
+        success {
+            emailext body: 'Build succeeded: ${BUILD_URL}', subject: 'Build Succeeded: ${JOB_NAME}', to: 'your-email@example.com'
         }
     }
 }

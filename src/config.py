@@ -1,6 +1,8 @@
 # src/config.py
 import os
 
+if not os.path.exists('data'):
+    os.makedirs('data')
 # Define directories for processed data and models
 PROCESSED_DATA_DIR = "processed_data"
 MODEL_DIR = "models"
@@ -14,4 +16,6 @@ DATA_PATHS = {
     "y_train": os.path.join(PROCESSED_DATA_DIR, "y_train.pkl"),
     "y_test": os.path.join(PROCESSED_DATA_DIR, "y_test.pkl"),
     "model": os.path.join(MODEL_DIR, ".pkl"),
+    "scaler": os.path.join(PROCESSED_DATA_DIR, "scaler.pkl"),  # Save scaler in processed_data
+
 }
