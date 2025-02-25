@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/ed0eb83b918f441997c42e4b99af9d92/artifacts
+end_time: 1740495877948
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: ed0eb83b918f441997c42e4b99af9d92
+run_name: powerful-mouse-831
+run_uuid: ed0eb83b918f441997c42e4b99af9d92
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740495873503
+status: 3
+tags: []
+user_id: mariem

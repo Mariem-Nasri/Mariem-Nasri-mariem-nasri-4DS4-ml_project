@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/a0ded6bd3b50476c90ae192d4f970068/artifacts
+end_time: 1740496730329
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: a0ded6bd3b50476c90ae192d4f970068
+run_name: able-hound-795
+run_uuid: a0ded6bd3b50476c90ae192d4f970068
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740496730313
+status: 3
+tags: []
+user_id: mariem

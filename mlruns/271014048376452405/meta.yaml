@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/271014048376452405
+creation_time: 1740495873335
+experiment_id: '271014048376452405'
+last_update_time: 1740495873335
+lifecycle_stage: active
+name: Customer_Churn_Experiment
