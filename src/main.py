@@ -8,6 +8,7 @@ from src.evaluate import evaluate_model
 from src.save import save_model
 from src.load import load_model
 
+
 def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Customer Churn Prediction Pipeline")
@@ -77,6 +78,7 @@ def main():
             print("Error: No saved model found. Train and save a model first.")
             return
         print("Model loaded successfully.")
+
 
 if __name__ == "__main__":
     main()

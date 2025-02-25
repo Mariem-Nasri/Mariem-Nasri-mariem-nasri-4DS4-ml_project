@@ -2,6 +2,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 import joblib
 from src.config import DATA_PATHS  # Assuming paths are imported from main.py
 
+
 def train_model(X_train_scaled_smote, y_train_smote):
     # Define the model
     best_params = {

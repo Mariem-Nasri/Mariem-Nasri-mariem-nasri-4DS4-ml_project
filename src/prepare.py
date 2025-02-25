@@ -10,6 +10,7 @@ from sklearn.cluster import KMeans
 # Paths for saving data
 from src.config import DATA_PATHS  # Assuming paths are imported from main.py
 
+
 def prepare_data():
     df = pd.read_csv('~/mariem-nasri-4DS4-ml_project/data/data_churn.csv')
     df_dp = df.copy()
@@ -49,7 +50,8 @@ def prepare_data():
 
     # Dropping insignificant columns
     df_dp.drop(columns=['Area code', 'Voice mail plan'], inplace=True)
-    df_dp.drop(columns=['Total day minutes', 'Total eve minutes', 'Total night minutes', 'Total intl minutes'], inplace=True)
+    df_dp.drop(columns=['Total day minutes', 'Total eve minutes', 
+    'Total night minutes', 'Total intl minutes'], inplace=True)
 
     # Feature Engineering: Usage Score
     corr_features = ['Total day charge', 'Total eve charge', 'Total night charge', 'Total intl charge']

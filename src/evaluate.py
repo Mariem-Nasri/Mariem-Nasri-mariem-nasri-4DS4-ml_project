@@ -1,5 +1,6 @@
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
+
 def evaluate_model(model, X_test, y_test):
     # Make predictions
     y_pred = model.predict(X_test)
