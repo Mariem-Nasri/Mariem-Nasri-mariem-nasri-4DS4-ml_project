@@ -1,0 +1,9 @@
+pandas
+numpy
+scikit-learn
+imblearn
+mlflow
+flask
+joblib
+elasticsearch
+kibana
