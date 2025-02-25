@@ -2,6 +2,7 @@ import mlflow
 import mlflow.sklearn
 import argparse
 import joblib
+import logging
 from src.config import DATA_PATHS
 from src.prepare import prepare_data
 from src.train import train_model
@@ -93,7 +94,9 @@ def main():
         except FileNotFoundError:
             print("❌ Error: Model or data files not found. Run --train or --prepare first.")
             return
+
         metrics = evaluate_model(gbm, X_test_scaled_smote_df, y_test_smote_df)
+
         # Structured output
         print("\n📊 **Evaluation Metrics:**")
         print(f"✅ Accuracy    : {metrics.get('accuracy', 0):.4f}")
@@ -140,5 +143,6 @@ def main():
             print("❌ Error: No model found. Run --train first.")
             return
         make_prediction(gbm, logger)
+
 if __name__ == "__main__":
     main()
