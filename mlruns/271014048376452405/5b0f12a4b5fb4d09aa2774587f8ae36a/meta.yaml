@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/5b0f12a4b5fb4d09aa2774587f8ae36a/artifacts
+end_time: 1740534574766
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: 5b0f12a4b5fb4d09aa2774587f8ae36a
+run_name: flawless-kit-683
+run_uuid: 5b0f12a4b5fb4d09aa2774587f8ae36a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740534570560
+status: 3
+tags: []
+user_id: jenkins
