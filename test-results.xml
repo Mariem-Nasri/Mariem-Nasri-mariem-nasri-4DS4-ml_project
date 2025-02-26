@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="1.823" timestamp="2025-02-26T02:35:20.669673+01:00" hostname="mariem"><testcase classname="" name="tests.test_preprocessing" time="0.000"><error message="collection failure">ImportError while importing test module '/home/mariem/mariem-nasri-4DS4-ml_project/tests/test_preprocessing.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_preprocessing.py:3: in &lt;module&gt;
+    from src.preprocessing import preprocess_data  # Replace with actual function
+E   ModuleNotFoundError: No module named 'src.preprocessing'</error></testcase></testsuite></testsuites>

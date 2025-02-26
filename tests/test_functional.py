@@ -4,6 +4,7 @@ import sys
 import os
 from unittest.mock import Mock
 
+print("Current working directory:", os.getcwd())
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.prepare import prepare_data
 
