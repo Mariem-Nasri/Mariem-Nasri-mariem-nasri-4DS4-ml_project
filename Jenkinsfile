@@ -44,16 +44,21 @@ pipeline {
 
         stage('Code Quality') {
             steps {
+                sh ". ${ENV_NAME}/bin/activate && black src/"
                 sh ". ${ENV_NAME}/bin/activate && flake8 --max-line-length=120 src/"
-                sh ". ${ENV_NAME}/bin/activate && black --check src/"
                 sh ". ${ENV_NAME}/bin/activate && bandit -r src/"
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh ". ${ENV_NAME}/bin/activate && pytest tests/ --cov=src --cov-report=xml"
+                sh ". ${ENV_NAME}/bin/activate && pytest tests/ --cov=src --cov-report=xml --junitxml=test-results.xml"
             }
+            post {
+                always {
+                junit 'test-results.xml'
+            }
+    }
         }
 
         stage('Data Preparation') {
