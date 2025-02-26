@@ -21,3 +21,4 @@ def evaluate_model(model, X_test, y_test):
         "confusion_matrix": confusion_matrix(y_test, y_pred),
     }
     return metrics
+    
