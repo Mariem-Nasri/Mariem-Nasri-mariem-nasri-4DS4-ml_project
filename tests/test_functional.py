@@ -22,6 +22,8 @@ pytestmark = pytest.mark.filterwarnings("ignore:X does not have valid feature na
 def test_prepare_data():
     """Test the prepare_data function."""
     X_train, X_test, y_train, y_test = prepare_data()
+    os.makedirs(os.path.dirname(DATA_PATHS["X_train"]), exist_ok=True)
+    os.makedirs(os.path.dirname(DATA_PATHS["X_test"]), exist_ok=True)
     
     # Assertions to ensure data is loaded correctly
     assert X_train is not None and X_test is not None
