@@ -6,10 +6,9 @@ from unittest.mock import Mock
 
 print("Current working directory:", os.getcwd())
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src.prepare import prepare_data
+from src.prepare import prepare_data  # Single import here
 
-# Import modules
-from src.prepare import prepare_data
+# Import other modules
 from src.train import train_model
 from src.evaluate import evaluate_model
 from src.save import save_model
