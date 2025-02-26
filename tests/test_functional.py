@@ -4,8 +4,8 @@ import sys
 import os
 from unittest.mock import Mock
 
-# Add the project root directory to the Python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from src.preprocessing import preprocess_data
 
 # Import modules
 from src.prepare import prepare_data
