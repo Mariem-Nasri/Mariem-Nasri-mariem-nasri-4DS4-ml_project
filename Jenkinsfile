@@ -41,7 +41,7 @@ pipeline {
                 sh """
                     . ${ENV_NAME}/bin/activate
                     nohup mlflow server --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000 > mlflow.log 2>&1 &
-                    sleep 10 
+                    sleep 10  # Wait for MLflow server to start
                     curl --retry 5 --retry-delay 10 --retry-connrefused http://127.0.0.1:5000
                 """
             }
@@ -118,7 +118,7 @@ pipeline {
                 sh """
                     . ${ENV_NAME}/bin/activate
                     nohup ${PYTHON} ${APP} > flask.log 2>&1 &
-                    sleep 10  // Wait for the app to start
+                    sleep 10  # Wait for the Flask app to start
                 """
             }
         }

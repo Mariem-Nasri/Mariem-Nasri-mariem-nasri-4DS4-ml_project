@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/8e2617b46cb94fc3a58d0df918073a17/artifacts
+end_time: 1740534328752
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: 8e2617b46cb94fc3a58d0df918073a17
+run_name: thundering-sheep-896
+run_uuid: 8e2617b46cb94fc3a58d0df918073a17
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740534324667
+status: 3
+tags: []
+user_id: jenkins
