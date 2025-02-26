@@ -52,13 +52,13 @@ pipeline {
 
         stage('Run Tests') {
             steps {
+                sh ". ${ENV_NAME}/bin/activate && pip install pytest-cov"
                 sh ". ${ENV_NAME}/bin/activate && pytest tests/ --cov=src --cov-report=xml --junitxml=test-results.xml"
             }
             post {
                 always {
-                junit 'test-results.xml'
+                    junit 'test-results.xml'
             }
-    }
         }
 
         stage('Data Preparation') {
