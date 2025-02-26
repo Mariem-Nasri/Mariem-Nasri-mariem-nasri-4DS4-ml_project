@@ -55,4 +55,3 @@ def make_prediction(gbm, logger):
     logger.info(f"Prediction: {prediction[0]}, Probability: {probability}")
     print(f"Prediction: {prediction[0]}")
     print(f"Churn Probability: {probability:.4f}")
-    
