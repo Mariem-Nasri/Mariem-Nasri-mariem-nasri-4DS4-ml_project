@@ -5,7 +5,7 @@ import os
 from unittest.mock import Mock
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from src.preprocessing import preprocess_data
+from src.prepare import prepare_data
 
 # Import modules
 from src.prepare import prepare_data
