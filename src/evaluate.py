@@ -6,7 +6,7 @@ from prepare import prepare_data
 import logging
 from elasticsearch import Elasticsearch
 
-# Set up Elasticsearch connection
+
 es = Elasticsearch(
     "https://localhost:9200",
     basic_auth=("elastic", "nvvDaamm0aYxHehoAHsj"),  # Use `basic_auth` instead of `http_auth`
