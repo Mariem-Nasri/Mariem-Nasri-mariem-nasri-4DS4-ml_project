@@ -1,8 +1,6 @@
 # evaluate.py
 import mlflow
 from sklearn.metrics import accuracy_score, precision_score, recall_score
-from train import train_model, log_model_and_metrics
-from prepare import prepare_data
 import logging
 from elasticsearch import Elasticsearch
 
