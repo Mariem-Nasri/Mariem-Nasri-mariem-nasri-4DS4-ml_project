@@ -1,6 +1,6 @@
 # evaluate.py
 import mlflow
-from sklearn.metrics import accuracy_score, precision_score, recall_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score , f1_score
 import logging
 from elasticsearch import Elasticsearch
 
@@ -39,4 +39,4 @@ def evaluate_model(model, X_test_scaled, y_test):
     logger.info(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1-score: {f1}")  # ADD F1-score ✅
 
     return {'accuracy': accuracy, 'precision': precision, 'recall': recall, 'f1_score': f1}  # RETURN F1 ✅
-    
+
