@@ -89,13 +89,11 @@ def main():
             client = MlflowClient()
             run_info = client.get_run(mlflow.active_run().info.run_id)
 
-            metrics = run_info.data.metrics
-            params = run_info.data.params
-            tags = run_info.data.tags
+
             artifacts = [artifact.path for artifact in client.list_artifacts(run_info.info.run_id)]
 
+
             # Log to Elasticsearch
-            #log_to_elasticsearch(run_info.info.run_id, metrics, params, tags, artifacts)
 
             print("Model training complete.")
 
