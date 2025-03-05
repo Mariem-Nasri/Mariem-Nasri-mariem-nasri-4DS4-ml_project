@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/ab6ba6f964c4441ab7f563a31679b45e/artifacts
+end_time: 1741202614906
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: ab6ba6f964c4441ab7f563a31679b45e
+run_name: adventurous-flea-155
+run_uuid: ab6ba6f964c4441ab7f563a31679b45e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741202614881
+status: 3
+tags: []
+user_id: jenkins

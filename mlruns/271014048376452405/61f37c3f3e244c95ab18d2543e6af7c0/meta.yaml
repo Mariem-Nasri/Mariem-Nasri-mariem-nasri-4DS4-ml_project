@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/61f37c3f3e244c95ab18d2543e6af7c0/artifacts
+end_time: 1741201084323
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: 61f37c3f3e244c95ab18d2543e6af7c0
+run_name: traveling-asp-658
+run_uuid: 61f37c3f3e244c95ab18d2543e6af7c0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741201084265
+status: 3
+tags: []
+user_id: jenkins

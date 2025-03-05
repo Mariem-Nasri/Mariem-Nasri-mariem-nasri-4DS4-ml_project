@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/d2cd2afdacad4c1c813abd7e71bb05bf/artifacts
+end_time: 1741165928957
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: d2cd2afdacad4c1c813abd7e71bb05bf
+run_name: nebulous-shrew-372
+run_uuid: d2cd2afdacad4c1c813abd7e71bb05bf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741165921408
+status: 3
+tags: []
+user_id: jenkins

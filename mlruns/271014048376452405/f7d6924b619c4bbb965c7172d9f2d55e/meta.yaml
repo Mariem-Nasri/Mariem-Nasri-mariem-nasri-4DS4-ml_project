@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/f7d6924b619c4bbb965c7172d9f2d55e/artifacts
+end_time: 1741202614937
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: f7d6924b619c4bbb965c7172d9f2d55e
+run_name: likeable-wolf-434
+run_uuid: f7d6924b619c4bbb965c7172d9f2d55e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741202614915
+status: 3
+tags: []
+user_id: jenkins

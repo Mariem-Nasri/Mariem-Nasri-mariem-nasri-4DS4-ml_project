@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/52ac5843e3bf42cb9b99bb8a3a61e980/artifacts
+end_time: 1741201084383
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: 52ac5843e3bf42cb9b99bb8a3a61e980
+run_name: stylish-quail-10
+run_uuid: 52ac5843e3bf42cb9b99bb8a3a61e980
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741201084341
+status: 3
+tags: []
+user_id: jenkins

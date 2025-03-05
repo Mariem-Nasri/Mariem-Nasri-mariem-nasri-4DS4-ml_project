@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/fee5f8c3ccaf438fb41cae23e7452420/artifacts
+end_time: 1741165933412
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: fee5f8c3ccaf438fb41cae23e7452420
+run_name: sassy-bear-788
+run_uuid: fee5f8c3ccaf438fb41cae23e7452420
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741165933374
+status: 3
+tags: []
+user_id: jenkins
