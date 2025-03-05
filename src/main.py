@@ -10,7 +10,9 @@ from src.evaluate import evaluate_model
 from src.save import save_model
 from src.load import load_model
 from src.predict import make_prediction
-from src.logging_utils import log_to_elasticsearch  # Import the log function
+from src.logging_utils import log_to_elasticsearch
+import mlflow
+from mlflow.tracking import MlflowClient
 
 # Define the logger globally
 logging.basicConfig(level=logging.DEBUG)

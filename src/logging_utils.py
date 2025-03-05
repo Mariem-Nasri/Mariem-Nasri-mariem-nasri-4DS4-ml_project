@@ -1,7 +1,5 @@
 # src/logging_utils.py
-import mlflow
 from elasticsearch import Elasticsearch
-from mlflow.tracking import MlflowClient
 
 # Set up Elasticsearch connection
 
