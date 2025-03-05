@@ -22,8 +22,9 @@ pipeline {
     }
 
     stages {
- stage('Clean Workspace') {
+        stage('Clean Workspace') {
             steps {
+                echo "Cleaning workspace..."
                 sh 'rm -rf venv/'
                 sh 'find . -type d -name "_pycache_" -exec rm -rf {} +'
                 sh "rm -rf ${DATA_DIR}/*.pkl ${MODEL_DIR}/*.pkl"
@@ -32,6 +33,7 @@ pipeline {
 
         stage('Setup Environment') {
             steps {
+                echo "Setting up virtual environment..."
                 sh """
                 ${PYTHON} -m venv ${ENV_NAME}
                 . ${ENV_NAME}/bin/activate && pip install --default-timeout=100 -r ${REQUIREMENTS}
@@ -41,12 +43,14 @@ pipeline {
 
         stage('Start MLflow Server') {
             steps {
+                echo "Starting MLflow server..."
                 sh ". ${ENV_NAME}/bin/activate && nohup mlflow server --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000 > mlflow.log 2>&1 &"
             }
         }
 
         stage('Code Quality') {
             steps {
+                echo "Running code quality checks..."
                 sh ". ${ENV_NAME}/bin/activate && flake8 --max-line-length=120 src/"
                 sh ". ${ENV_NAME}/bin/activate && black --check src/"
                 sh ". ${ENV_NAME}/bin/activate && black src/"
@@ -56,43 +60,49 @@ pipeline {
 
         stage('Run Unit Tests') {
             steps {
+                echo "Running unit tests..."
                 sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${TEST}"
             }
         }
 
         stage('Data Preparation') {
             steps {
+                echo "Preparing data..."
                 sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --prepare"
             }
         }
 
         stage('Train Model with MLflow') {
             steps {
+                echo "Training model..."
                 sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --train"
             }
         }
 
         stage('Evaluate Model with MLflow') {
             steps {
+                echo "Evaluating model..."
                 sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --evaluate"
             }
         }
 
         stage('Save Model to Production') {
             steps {
+                echo "Saving model to production..."
                 sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --save"
             }
         }
 
         stage('Predict') {
             steps {
+                echo "Running prediction..."
                 sh ". ${ENV_NAME}/bin/activate && ${PYTHON} -m ${MAIN} --predict"
             }
         }
 
-
         stage('Build Docker Image') {
             steps {
+                echo "Building Docker image..."
                 script {
                     docker.build("${DOCKER_USERNAME}/${IMAGE_NAME}:${TAG}")
                 }
@@ -101,6 +111,7 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
+                echo "Pushing Docker image..."
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                         docker.image("${DOCKER_USERNAME}/${IMAGE_NAME}:${TAG}").push()
@@ -112,9 +123,17 @@ pipeline {
         stage('Deploy with Docker') {
             steps {
                 script {
-                    sh "docker stop ${IMAGE_NAME} || true"
-                    sh "docker rm ${IMAGE_NAME} || true"
-                    sh "docker run -d --name ${IMAGE_NAME} -p 5001:5000 ${DOCKER_USERNAME}/${IMAGE_NAME}:${TAG}"
+                    def containerName = "${IMAGE_NAME}-${BUILD_ID}"
+
+                    // Check if container exists, then stop and remove it if necessary
+                    def containerExists = sh(script: "docker ps -a --filter 'name=${containerName}' -q", returnStdout: true).trim()
+                    if (containerExists) {
+                        sh "docker stop ${containerName} || true"
+                        sh "docker rm ${containerName} || true"
+                    }
+
+                    // Run container
+                    sh "docker run -d --name ${containerName} -p 5001:5000 ${DOCKER_USERNAME}/${IMAGE_NAME}:${TAG}"
                 }
             }
         }
@@ -122,8 +141,17 @@ pipeline {
 
     post {
         always {
-            sh "docker stop ${IMAGE_NAME} || true"
-            sh "docker rm ${IMAGE_NAME} || true"
+            script {
+                def containerName = "${IMAGE_NAME}-${BUILD_ID}"
+
+                // Check if container exists, then stop and remove it if necessary
+                def containerExists = sh(script: "docker ps -a --filter 'name=${containerName}' -q", returnStdout: true).trim()
+                if (containerExists) {
+                    sh "docker stop ${containerName} || true"
+                    sh "docker rm ${containerName} || true"
+                }
+            }
+
             sh 'sleep 40'
             sh 'pkill -f "python3 deployment/app.py" || true'
         }
