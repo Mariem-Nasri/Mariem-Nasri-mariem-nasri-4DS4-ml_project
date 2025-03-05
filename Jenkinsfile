@@ -153,7 +153,7 @@ pipeline {
             }
 
             sh 'sleep 40'
-            sh 'pkill -f "python3 deployment/app.py" || true'
+            sh 'pkill -f "python3 app.py" || true'
         }
     }
 }

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/4dac5a761852446c94d3942f03791286/artifacts
+end_time: 1741164212208
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: 4dac5a761852446c94d3942f03791286
+run_name: hilarious-mole-55
+run_uuid: 4dac5a761852446c94d3942f03791286
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741164212192
+status: 3
+tags: []
+user_id: jenkins

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/defb49cad9e24bae86724c2b5a2020ec/artifacts
+end_time: 1741164212185
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: defb49cad9e24bae86724c2b5a2020ec
+run_name: enthused-flea-991
+run_uuid: defb49cad9e24bae86724c2b5a2020ec
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741164212168
+status: 3
+tags: []
+user_id: jenkins

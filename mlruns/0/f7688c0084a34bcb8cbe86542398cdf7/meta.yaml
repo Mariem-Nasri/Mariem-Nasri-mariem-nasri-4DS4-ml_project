@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/f7688c0084a34bcb8cbe86542398cdf7/artifacts
+end_time: 1741164200631
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f7688c0084a34bcb8cbe86542398cdf7
+run_name: sassy-sponge-290
+run_uuid: f7688c0084a34bcb8cbe86542398cdf7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741164200590
+status: 3
+tags: []
+user_id: jenkins
