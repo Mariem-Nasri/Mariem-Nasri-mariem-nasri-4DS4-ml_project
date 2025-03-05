@@ -83,15 +83,10 @@ def main():
             mlflow.sklearn.log_model(gbm, "model")
 
             # Optionally, log any additional metrics if needed
-            # For example: mlflow.log_metric("accuracy", accuracy_score(y_test, gbm.predict(X_test)))
 
             # Get metrics, params, and artifacts from MLflow
             client = MlflowClient()
             run_info = client.get_run(mlflow.active_run().info.run_id)
-
-
-            artifacts = [artifact.path for artifact in client.list_artifacts(run_info.info.run_id)]
-
 
             # Log to Elasticsearch
 
