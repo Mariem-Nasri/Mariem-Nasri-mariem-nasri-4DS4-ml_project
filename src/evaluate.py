@@ -7,7 +7,7 @@ from elasticsearch import Elasticsearch
 
 es = Elasticsearch(
     "https://localhost:9200",
-    basic_auth=("elastic", "nvvDaamm0aYxHehoAHsj"),  # Use `basic_auth` instead of `http_auth`
+    basic_auth=("elastic", "elastic"),  # Use `basic_auth` instead of `http_auth`
     verify_certs=False
 )
 

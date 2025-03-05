@@ -10,7 +10,6 @@ from src.evaluate import evaluate_model
 from src.save import save_model
 from src.load import load_model
 from src.predict import make_prediction
-from src.logging_utils import log_to_elasticsearch
 import mlflow
 from mlflow.tracking import MlflowClient
 
@@ -96,7 +95,7 @@ def main():
             artifacts = [artifact.path for artifact in client.list_artifacts(run_info.info.run_id)]
 
             # Log to Elasticsearch
-            log_to_elasticsearch(run_info.info.run_id, metrics, params, tags, artifacts)
+            #log_to_elasticsearch(run_info.info.run_id, metrics, params, tags, artifacts)
 
             print("Model training complete.")
 
