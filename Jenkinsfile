@@ -12,7 +12,7 @@ pipeline {
         MODEL_DIR = "models"
         MLFLOW_TRACKING_URI = "http://127.0.0.1:5000"
         DOCKER_USERNAME = "haifabenyoussef" 
-        IMAGE_NAME = "haifa-ben-youssef-4ds4-mlops-app"
+        IMAGE_NAME = "mariem773/mariem_nasri_4ds4_mlops"
         TAG = "latest"
         DOCKERFILE = "Dockerfile"
     }
