@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/aab8e2b9ae494074b31c3e530ced32b8/artifacts
+end_time: 1741159913095
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: aab8e2b9ae494074b31c3e530ced32b8
+run_name: stately-wasp-453
+run_uuid: aab8e2b9ae494074b31c3e530ced32b8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741159907113
+status: 3
+tags: []
+user_id: jenkins
