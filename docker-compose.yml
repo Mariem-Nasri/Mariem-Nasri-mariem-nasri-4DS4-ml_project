@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.5.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: kibana:8.5.0
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_ENROLLMENT_TOKEN=eyJ2ZXIiOiI4LjUuMCIsImFkciI6WyIxNzIuMjEuMC4yOjkyMDAiXSwiZmdyIjoiNmVkODE3ZDk5YmEzNTU3MmNlMjk1NjNiNTkzY2JiNTkzMjg5YWIxZWIzY2I2YzAxZDQ3MWFhZjExNmY0NzI2OCIsImtleSI6Ilg2RElZcFVCbWtSYUVkTFNuZVhJOnhCMlAxeFA4Umg2ZnpyaWM2SW1HTmcifQ==
+      - SERVER_NAME=kibana
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+
+  mlflow:
+    image: python:3.9-slim  # Use your custom MLflow image or the base Python image
+    container_name: mlflow
+    build:
+      context: .
+      dockerfile: Dockerfile  # Make sure this is the correct path to your Dockerfile
+    ports:
+      - "5000:5000"  # MLflow UI
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000  # Points to the MLflow container
+    depends_on:
+      - elasticsearch
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Use your Flask app's Dockerfile
+    container_name: flask_app
+    ports:
+      - "8000:8000"  # Flask app port
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - MLflowTrackingURI=http://mlflow:5000  # Link to MLflow container
+      - ElasticsearchURI=http://elasticsearch:9200  # Link to Elasticsearch container
+    depends_on:
+      - mlflow
+      - elasticsearch

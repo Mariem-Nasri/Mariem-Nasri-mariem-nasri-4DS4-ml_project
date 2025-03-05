@@ -10,6 +10,7 @@ from src.evaluate import evaluate_model
 from src.save import save_model
 from src.load import load_model
 from src.predict import make_prediction
+from src.logging_utils import log_to_elasticsearch  # Import the log function
 
 # Define the logger globally
 logging.basicConfig(level=logging.DEBUG)
@@ -61,29 +62,42 @@ def main():
     # Step 2: Train model if needed
     if args.train:
         print("Training model...")
-    try:
-        X_train_scaled_smote_df = joblib.load(DATA_PATHS["X_train"])
-        y_train_smote_df = joblib.load(DATA_PATHS["y_train"])
-    except FileNotFoundError:
-        print("Error: Data files not found. Run --prepare first.")
-        return
+        try:
+            X_train_scaled_smote_df = joblib.load(DATA_PATHS["X_train"])
+            y_train_smote_df = joblib.load(DATA_PATHS["y_train"])
+        except FileNotFoundError:
+            print("Error: Data files not found. Run --prepare first.")
+            return
 
-    # Start MLflow run for training
-    with mlflow.start_run():
-        # Train the model using the pre-defined function
-        gbm = train_model(X_train_scaled_smote_df, y_train_smote_df)
+        # Start MLflow run for training
+        with mlflow.start_run():
+            # Train the model using the pre-defined function
+            gbm = train_model(X_train_scaled_smote_df, y_train_smote_df)
 
-        # Log parameters for tracking purposes
-        mlflow.log_param("model_type", "Gradient Boosting")
-        mlflow.log_param("data_version", "v1")
+            # Log parameters for tracking purposes
+            mlflow.log_param("model_type", "Gradient Boosting")
+            mlflow.log_param("data_version", "v1")
 
-        # Log the model using MLflow (no need for joblib.dump here)
-        mlflow.sklearn.log_model(gbm, "model")
+            # Log the model using MLflow
+            mlflow.sklearn.log_model(gbm, "model")
 
-        # Optionally, log any additional metrics if needed
-        # For example: mlflow.log_metric("accuracy", accuracy_score(y_test, gbm.predict(X_test)))
+            # Optionally, log any additional metrics if needed
+            # For example: mlflow.log_metric("accuracy", accuracy_score(y_test, gbm.predict(X_test)))
 
-        print("Model training complete.")
+            # Get metrics, params, and artifacts from MLflow
+            client = MlflowClient()
+            run_info = client.get_run(mlflow.active_run().info.run_id)
+
+            metrics = run_info.data.metrics
+            params = run_info.data.params
+            tags = run_info.data.tags
+            artifacts = [artifact.path for artifact in client.list_artifacts(run_info.info.run_id)]
+
+            # Log to Elasticsearch
+            log_to_elasticsearch(run_info.info.run_id, metrics, params, tags, artifacts)
+
+            print("Model training complete.")
+
     # Step 3: Evaluate model if needed
     if args.evaluate:
         print("\n🔍 Evaluating Model...\n" + "="*30)
