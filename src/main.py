@@ -11,7 +11,6 @@ from src.save import save_model
 from src.load import load_model
 from src.predict import make_prediction
 import mlflow
-from mlflow.tracking import MlflowClient
 
 # Define the logger globally
 logging.basicConfig(level=logging.DEBUG)
