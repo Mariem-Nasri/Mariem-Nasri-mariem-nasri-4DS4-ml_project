@@ -12,7 +12,7 @@ pipeline {
         MODEL_DIR = "models"
         MLFLOW_TRACKING_URI = "http://127.0.0.1:5000"
         DOCKER_USERNAME = "mariem773"
-        IMAGE_NAME = "mariem773/mariem_nasri_4ds4_mlops"
+        IMAGE_NAME = "flask_predict"
         TAG = "latest"
         DOCKERFILE = "Dockerfile"
     }
