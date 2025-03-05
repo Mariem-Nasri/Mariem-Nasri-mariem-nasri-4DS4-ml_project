@@ -69,7 +69,7 @@ def main():
             return
 
         # Start MLflow run for training
-        with mlflow.start_run() as run:
+        with mlflow.start_run():
             # Train the model using the pre-defined function
             gbm = train_model(X_train_scaled_smote_df, y_train_smote_df)
 
