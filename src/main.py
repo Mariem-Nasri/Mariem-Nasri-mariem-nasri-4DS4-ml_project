@@ -59,6 +59,7 @@ def main():
         joblib.dump(y_test_smote_df, DATA_PATHS["y_test"])
         print("Data preparation complete.")
 
+    # Step 2: Train model if needed
     if args.train:
         print("Training model...")
         try:
@@ -78,18 +79,12 @@ def main():
             mlflow.log_param("data_version", "v1")
 
             # Log the model using MLflow
-            model_uri = mlflow.sklearn.log_model(gbm, "model")
+            mlflow.sklearn.log_model(gbm, "model")
 
-            # **Explicitly register the model**
-            model_name = "my_gradient_boosting_model"  # Change as needed
-            registered_model = mlflow.register_model(
-                model_uri=model_uri.model_uri,
-                name=model_name
-            )
+            # Optionally, log any additional metrics if needed
 
-            print(f"Model registered as {registered_model.name}")
+            print("Model training complete.")
 
-    print("Model training complete.")
     # Step 3: Evaluate model if needed
     if args.evaluate:
         print("\n🔍 Evaluating Model...\n" + "="*30)

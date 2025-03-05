@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/1676bdb0c06d4e7f996b529c4aeb6e7d/artifacts
+end_time: 1741165501864
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 1676bdb0c06d4e7f996b529c4aeb6e7d
+run_name: resilient-pug-546
+run_uuid: 1676bdb0c06d4e7f996b529c4aeb6e7d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741165501789
+status: 3
+tags: []
+user_id: jenkins

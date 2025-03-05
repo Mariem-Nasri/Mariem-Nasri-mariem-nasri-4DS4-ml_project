@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/271014048376452405/4b8857559d804a208cc591d3f5831cc5/artifacts
+end_time: 1741165522032
+entry_point_name: ''
+experiment_id: '271014048376452405'
+lifecycle_stage: active
+run_id: 4b8857559d804a208cc591d3f5831cc5
+run_name: mysterious-shrew-612
+run_uuid: 4b8857559d804a208cc591d3f5831cc5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741165522005
+status: 3
+tags: []
+user_id: jenkins
