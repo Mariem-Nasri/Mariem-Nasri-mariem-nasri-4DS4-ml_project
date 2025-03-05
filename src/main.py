@@ -105,7 +105,8 @@ def main():
         print(f"📈 Recall     : {metrics.get('recall', 0):.4f}")
         print(f"📉 F1 Score   : {metrics.get('f1_score', 0):.4f}")
         print("="*30)
-
+        if mlflow.active_run():
+            mlflow.end_run()
         # Log evaluation metrics to MLflow
         with mlflow.start_run():
             mlflow.log_metric("accuracy", metrics.get("accuracy", 0))
