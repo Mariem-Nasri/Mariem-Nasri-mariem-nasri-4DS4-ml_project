@@ -52,8 +52,8 @@ pipeline {
             steps {
                 echo "Running code quality checks..."
                 sh ". ${ENV_NAME}/bin/activate && flake8 --max-line-length=120 src/"
-                sh ". ${ENV_NAME}/bin/activate && black --check src/"
-                sh ". ${ENV_NAME}/bin/activate && black src/"
+                sh ". ${ENV_NAME}/bin/activate && black --check src/"  // Check if files need reformatting
+                sh ". ${ENV_NAME}/bin/activate && black src/"          // Automatically format files
                 sh ". ${ENV_NAME}/bin/activate && bandit -r src/"
             }
         }
