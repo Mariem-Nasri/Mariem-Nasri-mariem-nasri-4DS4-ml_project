@@ -7,15 +7,14 @@ pipeline {
         REQUIREMENTS = "requirements.txt"
         MAIN = "src.main"
         TEST = "pytest tests/"
-        APP = "deployment/app.py"
+        APP = "app.py"
         DATA_DIR = "data"
         MODEL_DIR = "models"
         MLFLOW_TRACKING_URI = "http://127.0.0.1:5000"
-        DOCKER_USERNAME = "haifabenyoussef"
+        DOCKER_USERNAME = "mariem773"
         IMAGE_NAME = "mariem773/mariem_nasri_4ds4_mlops"
         TAG = "latest"
         DOCKERFILE = "Dockerfile"
-        CONTAINER_NAME = "${IMAGE_NAME}_${BUILD_NUMBER}"
     }
 
     triggers {
@@ -23,7 +22,7 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
+ stage('Clean Workspace') {
             steps {
                 sh 'rm -rf venv/'
                 sh 'find . -type d -name "_pycache_" -exec rm -rf {} +'
@@ -42,7 +41,7 @@ pipeline {
 
         stage('Start MLflow Server') {
             steps {
-                sh ". ${ENV_NAME}/bin/activate && nohup mlflow server --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000 &> mlflow.log &"
+                sh ". ${ENV_NAME}/bin/activate && nohup mlflow server --backend-store-uri ./mlruns --host 0.0.0.0 --port 5000 > mlflow.log 2>&1 &"
             }
         }
 
@@ -91,6 +90,7 @@ pipeline {
             }
         }
 
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -112,9 +112,9 @@ pipeline {
         stage('Deploy with Docker') {
             steps {
                 script {
-                    sh "docker stop ${CONTAINER_NAME} || true"
-                    sh "docker rm ${CONTAINER_NAME} || true"
-                    sh "docker run -d --name ${CONTAINER_NAME} -p 5001:5000 ${DOCKER_USERNAME}/${IMAGE_NAME}:${TAG}"
+                    sh "docker stop ${IMAGE_NAME} || true"
+                    sh "docker rm ${IMAGE_NAME} || true"
+                    sh "docker run -d --name ${IMAGE_NAME} -p 5001:5000 ${DOCKER_USERNAME}/${IMAGE_NAME}:${TAG}"
                 }
             }
         }
@@ -122,8 +122,8 @@ pipeline {
 
     post {
         always {
-            sh "docker stop ${CONTAINER_NAME} || true"
-            sh "docker rm ${CONTAINER_NAME} || true"
+            sh "docker stop ${IMAGE_NAME} || true"
+            sh "docker rm ${IMAGE_NAME} || true"
             sh 'sleep 40'
             sh 'pkill -f "python3 deployment/app.py" || true'
         }
