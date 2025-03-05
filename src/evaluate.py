@@ -10,13 +10,15 @@ es = Elasticsearch(
     basic_auth=("elastic", "nvvDaamm0aYxHehoAHsj"),  # Use `basic_auth` instead of `http_auth`
     verify_certs=False
 )
-# Custom logging handler to send logs to Elasticsearch
+
+
 class ElasticsearchHandler(logging.Handler):
     def emit(self, record):
         log_entry = self.format(record)
         es.index(index='mlflow-metrics', document={'message': log_entry})
         if not es.indices.exists(index='mlflow-metrics'):
             es.indices.create(index='mlflow-metrics')
+
 
 def evaluate_model(model, X_test_scaled, y_test):
     y_pred = model.predict(X_test_scaled)
