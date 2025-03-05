@@ -35,12 +35,12 @@ pipeline {
             steps {
                 echo "Setting up virtual environment..."
                 sh """
+                set -x
                 ${PYTHON} -m venv ${ENV_NAME}
                 . ${ENV_NAME}/bin/activate && pip install --default-timeout=100 -r ${REQUIREMENTS}
                 """
             }
         }
-
         stage('Start MLflow Server') {
             steps {
                 echo "Starting MLflow server..."
