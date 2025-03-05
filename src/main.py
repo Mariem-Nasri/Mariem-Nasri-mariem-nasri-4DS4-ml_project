@@ -84,12 +84,6 @@ def main():
 
             # Optionally, log any additional metrics if needed
 
-            # Get metrics, params, and artifacts from MLflow
-            client = MlflowClient()
-            run_info = client.get_run(mlflow.active_run().info.run_id)
-
-            # Log to Elasticsearch
-
             print("Model training complete.")
 
     # Step 3: Evaluate model if needed
